@@ -3,8 +3,8 @@ const categories = [
     { id: 2, name: "טכנולוגיה וכלי אינטרנט" },
     { id: 3, name: "כלי תמונה ועיצוב" },
     { id: 4, name: "קהילות ועדכונים" },
-    { id: 5, name: "אחר" }
-    { id: 6, name: "כל העדכונים" }
+    { id: 5, name: "אחר" },
+    { id: 0, name: "הצג הכל" }  // הוספת הקטגוריה החדשה
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
