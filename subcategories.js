@@ -16,17 +16,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         const categoryTitle = document.getElementById("category-title");
 
         if (selectedCategory) {
-            // עדכון הכותרת
-            categoryTitle.textContent = `עדכונים עבור קטגוריה: ${selectedCategory}`;
-
-            // סינון העדכונים המתאימים
-            updates = data.messages.filter(update => {
-                if (!Array.isArray(update.text)) return false;
-                return update.text.some(textPart =>
-                    typeof textPart === "string" && textPart.includes(selectedCategory)
-                );
-            });
-
+            // זה המקום בו נוסיף את הבדיקה החדשה
+            if (selectedCategory === "0") {
+                // אם נבחר "הצג הכל", הצג את כל העדכונים
+                updates = data.messages;
+                categoryTitle.textContent = "כל העדכונים";
+            } else {
+                // הקוד הקיים לסינון לפי קטגוריה
+                categoryTitle.textContent = `עדכונים עבור קטגוריה: ${selectedCategory}`;
+                updates = data.messages.filter(update => {
+                    if (!Array.isArray(update.text)) return false;
+                    return update.text.some(textPart =>
+                        typeof textPart === "string" && textPart.includes(selectedCategory)
+                    );
+                });
+            }
             renderUpdates(updates);
         } else {
             updatesContainer.innerHTML = `<p>לא נבחרה קטגוריה להצגת עדכונים.</p>`;
@@ -41,7 +45,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             `<p>שגיאה בטעינת העדכונים. אנא נסה שוב מאוחר יותר.</p>`;
     }
 });
-
 // פונקציה להצגת העדכונים
 function renderUpdates(updatesList) {
     const updatesContainer = document.getElementById("updates-container");
