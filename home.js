@@ -10,14 +10,14 @@ const categories = [
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.querySelector(".categories");
 
-    categories.forEach(category => {
-        const div = document.createElement("div");
-        div.className = "category-box";
-        div.textContent = category.name;
-        div.onclick = () => navigateToSubcategories(category.id);
-        container.appendChild(div);
-    });
-
+categories.forEach(category => {
+    const div = document.createElement("div");
+    div.className = "category-box";
+    div.setAttribute('data-id', category.id); // הוספת מזהה לאלמנט
+    div.textContent = category.name;
+    div.onclick = () => navigateToSubcategories(category.id);
+    container.appendChild(div);
+});
     // הוספת מאזין ללחיצת Enter בשורת החיפוש
     const searchInput = document.getElementById("search");
     searchInput.addEventListener("keypress", (event) => {
