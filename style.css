@@ -101,7 +101,11 @@ body {
     gap: 30px;
     padding: 20px;
 }
-
+.category-box[data-id="0"] {
+    background-color: #ffb3b3; /* צבע שונה */
+    width: 100%; /* רוחב מלא */
+    margin-top: 20px; /* מרווח מלמעלה */
+}
 .category-box {
     background-color: #b3e6ff;
     border-radius: 10px;
