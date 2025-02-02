@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>עדכונים לפי קטגוריה</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header">
+  <a href="home.html" class="back-button">חזרה לבית</a>
+  <h1 id="category-title">עדכונים</h1>
+  <p id="category-description">בחר קטגוריה להצגת העדכונים</p>
+</header>
+<main>
+  <div class="controls">
+    <select id="sort-order" class="sort-dropdown">
+      <option value="newest">מהחדש לישן</option>
+      <option value="oldest">מהישן לחדש</option>
+    </select>
+    <input type="text" id="search-box" class="search-box" placeholder="חפש בעדכונים...">
+  </div>
+  <div id="updates-container" class="updates-container">
+    <!-- העדכונים יופיעו כאן -->
+  </div>
+</main>
+<script src="subcategories.js"></script>
+</body>
+</html>

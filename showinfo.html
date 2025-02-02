@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Show Info</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header">
+  <h1 id="info-title">תוצאות חיפוש</h1>
+  <p>תוצאות חיפוש מתוך המאגר</p>
+  <div class="search-container">
+    <input type="text" id="search" placeholder="חפש עדכונים..." oninput="searchUpdates()">
+    <button onclick="performSearch()">🔍</button>
+  </div>
+  <div class="controls">
+    <select id="sort-order" class="sort-dropdown">
+      <option value="newest">מהחדש לישן</option>
+      <option value="oldest">מהישן לחדש</option>
+    </select>
+  </div>
+</header>
+<main id="results">
+  <!-- תוצאות ייטענו כאן על ידי JavaScript -->
+</main>
+<a href="home.html" class="back-button">חזרה לבית</a>
+<script src="showinfo.js"></script>
+</body>
+</html>
