@@ -4,6 +4,7 @@ const categories = [
     { id: 3, name: "כלי תמונה ועיצוב" },
     { id: 4, name: "קהילות ועדכונים" },
     { id: 5, name: "אחר" }
+    { id: 6, name: "כל העדכונים" }
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
