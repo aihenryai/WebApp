@@ -10,19 +10,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         const data = await response.json();
 
         const params = new URLSearchParams(window.location.search);
-        const selectedCategory = params.get("category"); // קבלת שם הקטגוריה
+        const selectedCategory = params.get("category");
 
         const updatesContainer = document.getElementById("updates-container");
         const categoryTitle = document.getElementById("category-title");
 
         if (selectedCategory) {
-            // זה המקום בו נוסיף את הבדיקה החדשה
             if (selectedCategory === "0") {
-                // אם נבחר "הצג הכל", הצג את כל העדכונים
                 updates = data.messages;
                 categoryTitle.textContent = "כל העדכונים";
             } else {
-                // הקוד הקיים לסינון לפי קטגוריה
                 categoryTitle.textContent = `עדכונים עבור קטגוריה: ${selectedCategory}`;
                 updates = data.messages.filter(update => {
                     if (!Array.isArray(update.text)) return false;
@@ -31,12 +28,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                     );
                 });
             }
+
+            // מיון העדכונים מהחדש לישן לפני הרינדור הראשוני
+            updates.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
             renderUpdates(updates);
         } else {
             updatesContainer.innerHTML = `<p>לא נבחרה קטגוריה להצגת עדכונים.</p>`;
         }
 
-        // הוספת מאזינים למיון ולחיפוש
         document.getElementById("sort-order").addEventListener("change", sortUpdates);
         document.getElementById("search-box").addEventListener("input", searchUpdates);
     } catch (error) {
@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             `<p>שגיאה בטעינת העדכונים. אנא נסה שוב מאוחר יותר.</p>`;
     }
 });
+
 // פונקציה להצגת העדכונים
 function renderUpdates(updatesList) {
     const updatesContainer = document.getElementById("updates-container");
