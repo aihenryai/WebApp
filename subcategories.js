@@ -17,7 +17,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (selectedCategory) {
             if (selectedCategory === "0") {
-                updates = data.messages;
+                // סינון הודעות ריקות ולא חוקיות
+                updates = data.messages.filter(message => 
+                    message.text && 
+                    Array.isArray(message.text) && 
+                    message.text.length > 0 &&
+                    message.date !== "1970-01-01T02:00:00"  // מסנן את ההודעה הריקה הראשונה
+                );
                 categoryTitle.textContent = "כל העדכונים";
             } else {
                 categoryTitle.textContent = `עדכונים עבור קטגוריה: ${selectedCategory}`;
@@ -29,10 +35,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 });
             }
 
-            // מיון העדכונים מהחדש לישן לפני הרינדור הראשוני
-            updates.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            renderUpdates(updates);
+            // בדיקה שיש עדכונים לפני המיון
+            if (updates && updates.length > 0) {
+                updates.sort((a, b) => new Date(b.date) - new Date(a.date));
+                renderUpdates(updates);
+            } else {
+                updatesContainer.innerHTML = `<p>לא נמצאו עדכונים להצגה.</p>`;
+            }
         } else {
             updatesContainer.innerHTML = `<p>לא נבחרה קטגוריה להצגת עדכונים.</p>`;
         }
@@ -41,6 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("search-box").addEventListener("input", searchUpdates);
     } catch (error) {
         console.error("שגיאה בטעינת העדכונים:", error);
+        console.log(error); // להוספת לוג מפורט יותר של השגיאה
         document.getElementById("updates-container").innerHTML =
             `<p>שגיאה בטעינת העדכונים. אנא נסה שוב מאוחר יותר.</p>`;
     }
