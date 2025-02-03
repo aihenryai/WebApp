@@ -1,15 +1,56 @@
 /* סגנון כללי */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
     color: #333;
-    font-size: 20px; /* גודל טקסט בסיסי מוגדל */
-    line-height: 1.8; /* מרווח בין שורות */
-    direction: rtl; /* יישור לימין */
+    font-size: 16px; /* הקטנת גודל הפונט הבסיסי */
+    line-height: 1.6;
+    direction: rtl;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
+/* התאמת גדלי טקסט למובייל */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .header p {
+        font-size: 16px;
+    }
+
+    .update-header h2 {
+        font-size: 20px;
+    }
+
+    .update-content {
+        font-size: 14px;
+    }
+
+    .update-box {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .controls .search-box,
+    .search-container input {
+        width: 90%;
+    }
+}
 /* כותרת */
 .header {
     background-color: #ffe6e6;
@@ -126,12 +167,22 @@ body {
 
 /* עדכונים בתתי קטגוריות */
 .updates-container {
-    display: flex;
-    flex-direction: column;
-    gap: 40px; /* ריווח מקורי בין עדכונים */
-    padding: 30px;
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
+#results.updates-container {
+    gap: 20px; /* הקטנת הרווח בין העדכונים במובייל */
+}
+
+@media screen and (max-width: 768px) {
+    #results.updates-container {
+        padding: 10px;
+        gap: 15px;
+    }
+}
 .update-box {
     background-color: #ffe6cc;
     border-radius: 15px;
