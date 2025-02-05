@@ -141,12 +141,13 @@ body {
     justify-content: center;
     gap: 30px;
     padding: 20px;
-}
+    
 .category-box[data-id="0"] {
-    background-color: #ffb3b3; /* צבע שונה */
-    width: 100%; /* רוחב מלא */
-    margin-top: 20px; /* מרווח מלמעלה */
+    background-color: #ffb3b3;
+    width: 100%;
+    margin-bottom: 20px; /* שינינו ל-margin-bottom במקום margin-top */
 }
+    
 .category-box {
     background-color: #b3e6ff;
     border-radius: 10px;
