@@ -111,3 +111,95 @@ function searchUpdates() {
 
     renderUpdates(filteredUpdates);
 }
+
+// הוספה לקובץ subcategories.js
+let page = 1;
+const ITEMS_PER_PAGE = 10;
+let isLoading = false;
+let hasMore = true;
+
+function loadMoreUpdates() {
+    if (isLoading || !hasMore) return;
+    
+    isLoading = true;
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const nextUpdates = updates.slice(start, end);
+    
+    if (nextUpdates.length > 0) {
+        renderUpdates(nextUpdates, true);
+        page++;
+    } else {
+        hasMore = false;
+    }
+    
+    isLoading = false;
+}
+
+// Intersection Observer למעקב אחרי סוף הדף
+const observer = new IntersectionObserver((entries) => {
+    const lastEntry = entries[0];
+    if (lastEntry.isIntersecting && !isLoading) {
+        loadMoreUpdates();
+    }
+}, { threshold: 0.5 });
+
+// עדכון פונקציית renderUpdates
+function renderUpdates(updatesList, append = false) {
+    const updatesContainer = document.getElementById("updates-container");
+    
+    if (!append) {
+        updatesContainer.innerHTML = "";
+        page = 1;
+    }
+
+    updatesList.forEach(update => {
+        const updateBox = document.createElement("div");
+        updateBox.classList.add("update-box");
+        
+        // הוספת תגיות
+        const tags = extractTags(update.text);
+        const tagsHTML = tags.length ? `
+            <div class="tags">
+                ${tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
+            </div>
+        ` : "";
+        
+        updateBox.innerHTML = `
+            <div class="update-header">
+                <h2>${update.from || "עדכון"}</h2>
+                <span class="update-date">
+                    ${new Date(update.date).toLocaleDateString("he-IL")}
+                </span>
+            </div>
+            <div class="update-content">
+                ${generateMessageContent(update.text)}
+            </div>
+            ${tagsHTML}
+        `;
+        
+        updatesContainer.appendChild(updateBox);
+    });
+
+    // הוספת loading spinner
+    const spinner = document.createElement("div");
+    spinner.className = "loading-spinner";
+    updatesContainer.appendChild(spinner);
+    observer.observe(spinner);
+}
+
+// פונקציה לחילוץ תגיות מטקסט
+function extractTags(text) {
+    const tags = [];
+    if (Array.isArray(text)) {
+        text.forEach(part => {
+            if (typeof part === "string") {
+                const matches = part.match(/#[\w\u0590-\u05FF]+/g);
+                if (matches) {
+                    tags.push(...matches);
+                }
+            }
+        });
+    }
+    return [...new Set(tags)];
+}
